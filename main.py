@@ -2,15 +2,14 @@ import networkx as nx
 import random
 from algorithms import (
     generate_ba_network,
-    generate_er_network, 
-    generate_sw_network
+    generate_er_network
 )
 from loguru import logger
 from tqdm import tqdm
 from utils import save_degree_distribution, save_graph
 
-N = (50, 100, 1000, 10000)
-M = (1, 2, 3, 4, 5, 10)
+N = (50, 100, 10000)
+M = (1, 2, 3, 4, 5)
 
 def er_experiment():
     for n in tqdm(N, desc=f"Running Erdos-Renyi Experiment for N={N}"):
@@ -24,7 +23,7 @@ def er_experiment():
             save_degree_distribution(g_er, filename=f"degree_distribution_er_{n}_{round(prob,5)}")
             
 def ba_experiment():
-    for n in tqdm((1000, 10000), desc=f"Running Barabasi-Albert Experiment for N=(1000, 10000) and M={M}"):
+    for n in tqdm(N, desc=f"Running Barabasi-Albert Experiment for N={N} and M={M}"):
         for m in M:
             logger.info(f"Generating BA network with N={n} and M={m}")
             g_ba = generate_ba_network(n, m)
